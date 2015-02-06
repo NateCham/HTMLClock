@@ -42,7 +42,6 @@ function getLocation() {
     "use strict";
     
     geoError();
-    console.log(navigator.geolocation);
     
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(geoSuccess);
@@ -97,17 +96,17 @@ function hideAlarmPopup() {
     $('#popup').addClass('hide');
 }
 
-function insertAlarm(hours, minutes, ampm, alarmName) {
+function insertAlarm(time, alarmName) {
     var divOut = $("<div></div>");
     divOut.addClass("flexible");
     
     var divIn1 = $("<div></div>");
     divIn1.addClass('name');
-    divIn1.html(alarmName);
+    divIn1.html(alarmName + " -- ");
     
     var divIn2 = $("<div></div>")
     divIn2.addClass('time');
-    divIn2.html(hours + ':' + minutes + ampm);
+    divIn2.html(time.hours + ':' + time.mins + time.ampm);
     
     divOut.append(divIn1);
     divOut.append(divIn2);
@@ -124,15 +123,45 @@ function addAlarm() {
     ampm = $("#ampm option:selected").text();
     alarmName = $("#alarmName").val();
     
-    insertAlarm(hours, mins, ampm, alarmName);
-    hideAlarmPopup();
+    time = {
+        "hours": hours,
+        "mins": mins,
+        "ampm": ampm
+    };
+    
+    var AlarmObject = Parse.Object.extend("Alarm");
+    var alarmObject = new AlarmObject();
+    alarmObject.save(
+        {"time": time,
+         "alarmName": alarmName
+        },
+        {
+            success: function(object) {
+                insertAlarm(time, alarmName);
+                hideAlarmPopup();
+            }
+        });
 }
 
-
+function getAllAlarms() {
+    Parse.initialize("XB4tEWWbsMaAb73mHlyxQXqVbU3jMNuf6HNAO8VB", "81MeiKhYfNDJBWIbtbKsVV3Rwl8Jo0MIQmSCCjaP");
+    
+    var AlarmObject = Parse.Object.extend("Alarm");
+    var query = new Parse.Query(AlarmObject);
+    query.find({
+        success: function(results) {
+            for (var i = 0; i < results.length; i++) {
+                insertAlarm(results[i].get("time"), results[i].get("alarmName"));
+            }
+        }
+    });
+}
 
 window.onload = function () {
     "use strict";
 
     getLocation();
     getTime();
+    
+    getAllAlarms();
 };

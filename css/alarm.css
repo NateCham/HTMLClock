@@ -11,7 +11,7 @@ h2 {
 	width:100px;
 	padding:10px 10px;
 }
-.flexable {
+.flexible {
 	display: -webkit-box;
 	display: -moz-box;
 	display: -ms-flexbox;
