@@ -41,6 +41,9 @@ function geoError() {
 function getLocation() {
     "use strict";
     
+    geoError();
+    console.log(navigator.geolocation);
+    
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(geoSuccess);
     } else {
@@ -84,6 +87,46 @@ function getTempClass(max_temp) {
     }
 }
 
+function showAlarmPopup() {
+    $('#mask').removeClass("hide");
+    $('#popup').removeClass("hide");
+}
+
+function hideAlarmPopup() {
+    $('#mask').addClass('hide');
+    $('#popup').addClass('hide');
+}
+
+function insertAlarm(hours, minutes, ampm, alarmName) {
+    var divOut = $("<div></div>");
+    divOut.addClass("flexible");
+    
+    var divIn1 = $("<div></div>");
+    divIn1.addClass('name');
+    divIn1.html(alarmName);
+    
+    var divIn2 = $("<div></div>")
+    divIn2.addClass('time');
+    divIn2.html(hours + ':' + minutes + ampm);
+    
+    divOut.append(divIn1);
+    divOut.append(divIn2);
+    
+    $("#alarms").append(divOut);
+    
+}
+
+function addAlarm() {
+    var hours, mins, ampm, alarmName;
+    
+    hours = $("#hours option:selected").text();
+    mins = $("#minutes option:selected").text();
+    ampm = $("#ampm option:selected").text();
+    alarmName = $("#alarmName").val();
+    
+    insertAlarm(hours, mins, ampm, alarmName);
+    hideAlarmPopup();
+}
 
 
 

@@ -6,6 +6,7 @@
         
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/alarm.css">
     </head>
     
     <body>
@@ -21,10 +22,60 @@
             </div>
             
             <img id="forecastIcon">
+            
+            <div id="alarmContainer">
+                <div id="alarmHeader" class="flexible">
+                    <h2>Alarms</h2>
+                    <input type="button" class="button" value="Add Alarm" onclick="showAlarmPopup()" />
+                </div>
+                <div id="alarms"></div>
+            </div>
+            <div id="mask" class="hide"></div>
+            <div id="popup" class="hide">
+                <h1>Add Alarm</h1>
+                <div id="timeContainer">
+                    <select id="hours">
+                        <option>12</option>
+                        <option>01</option>
+                        <option>02</option>
+                        <option>03</option>
+                        <option>04</option>
+                        <option>05</option>
+                        <option>06</option>
+                        <option>07</option>
+                        <option>08</option>
+                        <option>09</option>
+                        <option>10</option>
+                        <option>11</option>
+                    </select>
+                    <select id="minutes">
+                        <option>00</option>
+                        <option>05</option>
+                        <option>10</option>
+                        <option>15</option>
+                        <option>20</option>
+                        <option>25</option>
+                        <option>30</option>
+                        <option>35</option>
+                        <option>40</option>
+                        <option>45</option>
+                        <option>50</option>
+                        <option>55</option>
+                    </select>
+                    <select id="ampm">
+                        <option>am</option>
+                        <option>pm</option>
+                    </select>
+                </div>
+                <input type="text" id="alarmName" placeholder="Alarm Name" />
+                <div class="flexible">
+                    <input type="button" class="button" value="Cancel" onclick="hideAlarmPopup()"/>
+                    <input type="button" class="button" value="Save Alarm" onclick="addAlarm()" />
+                </div>
+            </div>
         </div>
         
         <div class="info">
-            <span id="alarms">No Alarms Set</span>
             <span id="geolocation"></span>
         </div>
 
