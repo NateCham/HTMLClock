@@ -122,6 +122,8 @@ function addAlarm() {
     
     FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
+            ga('send', 'event', 'Alarm', 'Add');
+            
             var hours, mins, ampm, alarmName;
     
             hours = $("#hours option:selected").text();
@@ -156,7 +158,8 @@ function addAlarm() {
 function deleteAlarm(alarmName) {
     FB.getLoginStatus(function(response) {
         if (response.status === 'connected') {
-            console.log(alarmName);
+            ga('send', 'event', 'Alarm', 'Delete');
+
             var AlarmObject = Parse.Object.extend("Alarm");
             var query = new Parse.Query(AlarmObject);
             query.equalTo("alarmName", alarmName);
@@ -194,7 +197,6 @@ function facebookLogin() {
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
     console.log('statusChangeCallback');
-    console.log(response);
     // The response object is returned with a status field that lets the
     // app know the current login status of the person.
     // Full docs on the response object can be found in the documentation
