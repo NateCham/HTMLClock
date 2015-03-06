@@ -274,10 +274,30 @@ function facebookLogin() {
   }    
 }
 
-window.onload = function () {
-    "use strict";
+function callback() {
+    token = localStorage.getItem("token");
 
+    $.ajax({
+        url: 'https://api.imgur.com/3/account/me',
+        type: 'GET',
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+        },
+        success: function(result) {
+            alert('Imgur User Name: ' + result.data.url);
+            console.log(result);
+        }
+    });
+}
+
+function onload() {
+    "use strict";
     getLocation();
     getTime();
-    facebookLogin();
-};  
+    //facebookLogin();
+    
+    var oauth_params = {'client_id' : '0383d9edf04aa3c',
+                    'type' : 'token',
+                    'callback_function' : 'callback'};
+    init(oauth_params);
+}
