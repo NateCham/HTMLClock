@@ -285,7 +285,6 @@ function callback() {
         },
         success: function(result) {
             alert('Imgur User Name: ' + result.data.url);
-            console.log(result);
         }
     });
 }
@@ -294,7 +293,7 @@ function onload() {
     "use strict";
     getLocation();
     getTime();
-    //facebookLogin();
+    facebookLogin();
     
     var oauth_params = {'client_id' : '0383d9edf04aa3c',
                     'type' : 'token',
